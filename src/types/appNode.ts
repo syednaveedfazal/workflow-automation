@@ -4,7 +4,7 @@ import { TaskParam } from "@/types/task";
 export interface AppNodeData {
   type: TaskType;
   inputs: Record<string, string>;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 export interface AppNode extends Node {
   data: AppNodeData;

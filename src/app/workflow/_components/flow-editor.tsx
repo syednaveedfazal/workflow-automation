@@ -44,28 +44,34 @@ export const FlowEditor = ({ workflow }: { workflow: Workflow }) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
-  const onConnect = useCallback((connection: Connection) => {
-    setEdges((eds) =>
-      addEdge(
-        {
-          ...connection,
-          animated: true,
-        },
-        eds
-      )
-    );
-  }, []);
-  const onDrop = useCallback((event: React.DragEvent) => {
-    event.preventDefault();
-    const taskType = event.dataTransfer.getData("application/reactflow");
-    if (!taskType) return;
-    const position = screenToFlowPosition({
-      x: event.clientX,
-      y: event.clientY,
-    });
-    const newNode = CreateFlowNode(taskType as TaskType, position);
-    setNodes((nds) => nds.concat(newNode));
-  }, []);
+  const onConnect = useCallback(
+    (connection: Connection) => {
+      setEdges((eds) =>
+        addEdge(
+          {
+            ...connection,
+            animated: true,
+          },
+          eds
+        )
+      );
+    },
+    [setEdges]
+  );
+  const onDrop = useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault();
+      const taskType = event.dataTransfer.getData("application/reactflow");
+      if (!taskType) return;
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+      const newNode = CreateFlowNode(taskType as TaskType, position);
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [setNodes, screenToFlowPosition]
+  );
   return (
     <main className="h-full w-full">
       <ReactFlow

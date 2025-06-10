@@ -48,7 +48,7 @@ export function EditWorkflowDialog({
     }: {
       values: createWorkflowSchemaType;
       workflowId: string;
-    }) => UpdateWorkflowName(values, workflowId),
+    }) => UpdateWorkflowName(workflowId, values.name),
     onSuccess: () => {
       toast.dismiss("create-workflow");
       toast.success("Workflow created successfully", {
