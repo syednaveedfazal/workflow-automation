@@ -60,8 +60,7 @@ export function DeleteWorkflowDialog({
   });
   const onSubmit = useCallback(
     (values: deleteWorkflowType) => {
-      console.log("Submitting workflow", values);
-      toast.loading("creating workflow...", { id: "create-workflow" });
+      // toast.loading("creating workflow...", { id: "create-workflow" });
       mutate({ values, workflowId });
     },
     [mutate, workflowId]

@@ -4,6 +4,7 @@ import {
   Layers2Icon,
   ShieldCheckIcon,
   CoinsIcon,
+  File,
 } from "lucide-react";
 import { ProjectLogo } from "@/components/custom/ProjectLogo";
 import Link from "next/link";
@@ -29,6 +30,11 @@ const routes = [
     href: "billing",
     label: "Billing",
     icon: CoinsIcon,
+  },
+  {
+    href: "documents",
+    label: "Documents",
+    icon: File,
   },
 ];
 export function DesktopSidebar() {

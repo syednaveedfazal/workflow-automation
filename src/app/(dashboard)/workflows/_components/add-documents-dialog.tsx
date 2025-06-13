@@ -1,7 +1,8 @@
 "use client";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useState } from "react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Layers2Icon } from "lucide-react";
+import { File } from "lucide-react";
 import { CustomDialogHeader } from "@/components/custom/custom-dialog-header";
 import { useForm } from "react-hook-form";
 import {
@@ -15,72 +16,67 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  createWorkflowSchema,
-  createWorkflowSchemaType,
-} from "@/formSchema/workflow";
+import { addFileSchema, addFileType } from "@/formSchema/workflow";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useCallback } from "react";
-import { UpdateWorkflowName } from "@/actions/workflows/update-work-flow-name";
-export function EditWorkflowDialog({
-  open,
-  setOpen,
-  workflowId,
-}: {
-  open: boolean;
-  setOpen: (v: boolean) => void;
-  workflowId: string;
-}) {
-  const form = useForm<createWorkflowSchemaType>({
-    resolver: zodResolver(createWorkflowSchema),
+import { useRouter } from "next/navigation";
+import { UploadDocument } from "@/actions/workflows/upload-document";
+export function AddDocumentsDialog({ triggerText }: { triggerText?: string }) {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const form = useForm<{
+    name: string;
+    file: File;
+  }>({
+    resolver: zodResolver(addFileSchema),
     defaultValues: {
       name: "",
-      description: "",
+      file: undefined as unknown as File,
     },
   });
-  const queryClient = useQueryClient();
+  queryClient.invalidateQueries({ queryKey: ["allDocuments"] });
+
   const { mutate, isPending } = useMutation({
-    mutationFn: async ({
-      values,
-      workflowId,
-    }: {
-      values: createWorkflowSchemaType;
-      workflowId: string;
-    }) => UpdateWorkflowName(workflowId, values.name),
-    onSuccess: () => {
-      toast.dismiss("create-workflow");
-      toast.success("Workflow created successfully", {
-        id: "create-workflow-success",
+    mutationFn: ({ form }: { form: addFileType }) => UploadDocument({ form }),
+    onSuccess: (data: string) => {
+      toast.dismiss("uploaded-document");
+      toast.success("uploaded document successfully", {
+        id: "document-uploaded-success",
       });
-      queryClient.invalidateQueries({ queryKey: ["workflows"] });
+      router.push(data);
     },
     onError: () => {
-      toast.dismiss("create-workflow");
-      toast.error("Failed to create workflow", { id: "create-workflow-error" });
+      toast.dismiss("uploaded-document");
+      toast.error("Failed to upload document", { id: "create-upload-error" });
     },
   });
+
   const onSubmit = useCallback(
-    (values: createWorkflowSchemaType) => {
-      // toast.loading("creating workflow...", { id: "create-workflow" });
-      mutate({ values, workflowId });
+    (values: addFileType) => {
+      // toast.loading("uploading...", { id: "upload-document" });
+      mutate({ form: values });
     },
-    [mutate, workflowId]
+    [mutate]
   );
+
   return (
     <Dialog
       open={open}
-      onOpenChange={(v) => {
-        setOpen(v);
+      onOpenChange={(open) => {
         form.reset();
+        setOpen(open);
       }}
     >
+      <DialogTrigger asChild>
+        <Button>{triggerText ?? "Add Documents"}</Button>
+      </DialogTrigger>
       <DialogContent className="px-0">
         <CustomDialogHeader
-          icon={Layers2Icon}
-          title="Edit Workflow"
-          subtitleClassName="Update your workflow details"
+          icon={File}
+          title="Add Document"
+          subtitleClassName="Add any image or documents to analyze"
         />
         <div className="p-6">
           <Form {...form}>
@@ -93,7 +89,7 @@ export function EditWorkflowDialog({
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Workflow Name</FormLabel>
+                    <FormLabel>Document Name</FormLabel>
                     <FormControl>
                       <Input {...field} className="input" />
                     </FormControl>
@@ -104,25 +100,27 @@ export function EditWorkflowDialog({
               />
               <FormField
                 control={form.control}
-                name="description"
+                name="file"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                      Description
-                      <p className="text-xs text-muted-foreground">
-                        (optional)
-                      </p>
-                    </FormLabel>
+                    <FormLabel>File</FormLabel>
                     <FormControl>
-                      <Textarea {...field} className="resize-none" />
+                      <Input
+                        type="file"
+                        className="input"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            field.onChange(file);
+                          }
+                        }}
+                      />
                     </FormControl>
-                    <FormDescription>
-                      A brief description of your workflow
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <Button type="submit" className="w-full" disabled={isPending}>
                 {isPending ? "Creating..." : "Proceed"}
               </Button>
