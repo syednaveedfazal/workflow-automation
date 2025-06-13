@@ -18,9 +18,14 @@ import { CreateFlowNode } from "@/lib/workflow/createFlowNode";
 import { TaskType } from "@/types/task";
 import { NodeComponent } from "./nodes/node-component";
 import { AppNode } from "@/types/appNode";
+import DeletableEdge from "@/app/(dashboard)/workflows/_components/edges/deletable-edge";
 
 const nodeTypes = {
   Node: NodeComponent,
+};
+
+const edgeTypes = {
+  default: DeletableEdge,
 };
 export const FlowEditor = ({ workflow }: { workflow: Workflow }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState<AppNode>([
@@ -80,7 +85,9 @@ export const FlowEditor = ({ workflow }: { workflow: Workflow }) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         fitView
+  
         fitViewOptions={{ padding: 2 }}
         onDragOver={onDragOver}
         onDrop={onDrop}

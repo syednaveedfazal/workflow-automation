@@ -22,6 +22,8 @@ export const TaskMenu = () => {
           <AccordionTrigger>Data extraction</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-1">
             <TaskMenuButton taskType={TaskType.PAGE_TO_HTML} />
+            <TaskMenuButton taskType={TaskType.EXTRACT_TEXT_FROM_ELEMENT} />
+            <TaskMenuButton taskType={TaskType.ANALYZE_DOCUMENT_ELEMENT} />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
