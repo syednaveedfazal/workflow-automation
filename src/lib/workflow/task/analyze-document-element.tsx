@@ -1,27 +1,33 @@
 import { TaskParamType, TaskType } from "@/types/task";
-import { ActivityIcon, LucideProps } from "lucide-react";
+import { BrainIcon, LucideProps } from "lucide-react";
 
 export const AnalyzeDocumentElement = {
   type: TaskType.ANALYZE_DOCUMENT_ELEMENT,
-  label: "Analyze Document Element",
+  label: "Extract Data With AI",
   icon: (props: LucideProps) => (
-    <ActivityIcon className="stroke-pink-700" {...props} />
+    <BrainIcon className="stroke-green-500" {...props} />
   ),
   isEntryPoint: false,
   inputs: [
+    {
+      name: "Content",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+    {
+      name: "Credentials",
+      type: TaskParamType.CREDENTIAL,
+      required: true,
+    },
     {
       name: "Prompt",
       type: TaskParamType.STRING,
       required: true,
     },
-    {
-      name: "Document",
-      type: TaskParamType.DOCUMENT,
-    },
   ],
   outputs: [
     {
-      name: "Result",
+      name: "Extracted Data",
       type: TaskParamType.STRING,
     },
   ],
