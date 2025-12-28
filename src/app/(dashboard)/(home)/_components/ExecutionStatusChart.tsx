@@ -1,5 +1,7 @@
 "use client";
 
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LayersIcon } from "lucide-react";
 import React from "react";
 import {
     Area,
@@ -9,56 +11,45 @@ import {
     Tooltip,
     XAxis,
 } from "recharts";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Layers2 } from "lucide-react";
 
-const data = [
-    { date: "Oct 1", success: 10, failed: 2 },
-    { date: "Oct 2", success: 25, failed: 5 },
-    { date: "Oct 3", success: 30, failed: 5 },
-    { date: "Oct 4", success: 5, failed: 2 },
-    { date: "Oct 5", success: 15, failed: 8 },
-    { date: "Oct 6", success: 20, failed: 5 },
-    { date: "Oct 7", success: 40, failed: 10 },
-    { date: "Oct 8", success: 35, failed: 8 },
-    { date: "Oct 9", success: 30, failed: 5 },
-    { date: "Oct 10", success: 45, failed: 12 },
-    { date: "Oct 12", success: 20, failed: 4 },
-    { date: "Oct 14", success: 15, failed: 3 },
-    { date: "Oct 16", success: 25, failed: 6 },
-    { date: "Oct 18", success: 30, failed: 8 },
-    { date: "Oct 20", success: 40, failed: 10 },
-    { date: "Oct 22", success: 35, failed: 8 },
-    { date: "Oct 24", success: 20, failed: 4 },
-    { date: "Oct 26", success: 45, failed: 12 },
-    { date: "Oct 28", success: 15, failed: 3 },
-    { date: "Oct 30", success: 50, failed: 15 },
-];
+// Generate dummy data for October (31 days)
+const data = Array.from({ length: 31 }, (_, i) => {
+    const day = i + 1;
+    // Create a wave-like pattern with some randomness
+    const success = Math.floor(Math.random() * 50) + 20 + Math.sin(i / 2) * 20;
+    const failed = Math.floor(Math.random() * 10) + 5;
+    return {
+        name: `Oct ${day}`,
+        success,
+        failed,
+    };
+});
 
 export default function ExecutionStatusChart() {
     return (
-        <Card className="h-full">
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Layers2 className="w-6 h-6 text-primary" />
+        <Card className="h-full shadow-sm hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-col items-start pb-4 space-y-0">
+                <CardTitle className="text-base font-bold text-foreground flex items-center gap-2">
+                    <LayersIcon className="w-5 h-5 text-muted-foreground" />
                     Workflow execution status
                 </CardTitle>
-                <CardDescription>
-                    Daily number of sorted and failed workflow executions
-                </CardDescription>
+                <p className="text-sm text-muted-foreground">
+                    Daily number of successful and failed workflow executions
+                </p>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pl-0">
                 <div className="h-[300px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                         <AreaChart
+                            width={500}
+                            height={400}
                             data={data}
-                            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                            margin={{
+                                top: 10,
+                                right: 30,
+                                left: 0,
+                                bottom: 0,
+                            }}
                         >
                             <defs>
                                 <linearGradient id="colorSuccess" x1="0" y1="0" x2="0" y2="1">
@@ -66,35 +57,41 @@ export default function ExecutionStatusChart() {
                                     <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                                 </linearGradient>
                                 <linearGradient id="colorFailed" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
-                                    <stop offset="95%" stopColor="#ef4444" stopOpacity={0} />
+                                    <stop offset="5%" stopColor="#15803d" stopOpacity={0.8} />
+                                    <stop offset="95%" stopColor="#15803d" stopOpacity={0} />
                                 </linearGradient>
                             </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
                             <XAxis
-                                dataKey="date"
-                                tickLine={false}
+                                dataKey="name"
                                 axisLine={false}
-                                tickMargin={8}
-                                minTickGap={32}
-                                tickFormatter={(value) => value}
+                                tickLine={false}
+                                tick={{ fontSize: 12, fill: "#6B7280" }}
+                                tickMargin={10}
                             />
-                            <Tooltip />
+                            <Tooltip
+                                contentStyle={{
+                                    backgroundColor: "#fff",
+                                    borderRadius: "8px",
+                                    border: "1px solid #e5e7eb",
+                                    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                                }}
+                            />
                             <Area
                                 type="monotone"
                                 dataKey="success"
-                                stroke="#10b981"
-                                fillOpacity={1}
-                                fill="url(#colorSuccess)"
                                 stackId="1"
+                                stroke="#10b981"
+                                fill="url(#colorSuccess)"
+                                strokeWidth={2}
                             />
                             <Area
                                 type="monotone"
                                 dataKey="failed"
-                                stroke="#ef4444"
-                                fillOpacity={1}
-                                fill="url(#colorFailed)"
                                 stackId="1"
+                                stroke="#15803d" // Dark green for failed/other
+                                fill="url(#colorFailed)"
+                                strokeWidth={2}
                             />
                         </AreaChart>
                     </ResponsiveContainer>

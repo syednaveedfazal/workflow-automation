@@ -10,11 +10,6 @@ export const WaitForElementTask = {
     isEntryPoint: false,
     inputs: [
         {
-            name: "Web page",
-            type: TaskParamType.BROWSER_INSTANCE,
-            required: true,
-        },
-        {
             name: "Selector",
             type: TaskParamType.STRING,
             required: true,
@@ -22,12 +17,16 @@ export const WaitForElementTask = {
         {
             name: "Visibility",
             type: TaskParamType.SELECT,
-            hideHandle: true,
             required: true,
             options: [
                 { label: "Visible", value: "visible" },
                 { label: "Hidden", value: "hidden" },
             ],
+        },
+        {
+            name: "Web page",
+            type: TaskParamType.BROWSER_INSTANCE,
+            required: true,
         },
     ],
     outputs: [
@@ -36,4 +35,4 @@ export const WaitForElementTask = {
             type: TaskParamType.BROWSER_INSTANCE,
         },
     ],
-};
+} as const;

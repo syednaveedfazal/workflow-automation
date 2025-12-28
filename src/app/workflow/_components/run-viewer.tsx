@@ -3,6 +3,7 @@
 import React from "react";
 
 export default function RunViewer({ workflowId }: { workflowId: string }) {
+    console.log(workflowId);
     return (
         <div className="flex flex-col h-full w-full items-center justify-center">
             <div className="p-4 text-center">

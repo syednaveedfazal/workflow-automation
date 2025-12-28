@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
     Select,
     SelectContent,
@@ -8,16 +7,17 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import React from "react";
 
 export default function PeriodSelector() {
     return (
-        <Select defaultValue="December 2025">
+        <Select>
             <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select period" />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="December 2025">December 2025</SelectItem>
-                <SelectItem value="November 2025">November 2025</SelectItem>
+                <SelectItem value="option1">October 2024</SelectItem>
+                <SelectItem value="option2">November 2024</SelectItem>
             </SelectContent>
         </Select>
     );

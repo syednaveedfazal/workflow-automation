@@ -15,20 +15,20 @@ export const AddPropertyToJsonTask = {
             required: true,
         },
         {
-            name: "Property Name",
+            name: "Property name",
             type: TaskParamType.STRING,
             required: true,
         },
         {
-            name: "Property Value",
+            name: "Property value",
             type: TaskParamType.STRING,
             required: true,
         },
     ],
     outputs: [
         {
-            name: "JSON",
+            name: "Update JSON",
             type: TaskParamType.STRING,
         },
     ],
-};
+} as const;

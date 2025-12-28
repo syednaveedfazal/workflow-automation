@@ -1,5 +1,7 @@
 "use client";
-import React from "react";
+import { ChevronsLeft, ChevronsRight } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Accordion,
   AccordionContent,
@@ -7,12 +9,38 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { TaskType } from "@/types/task";
-import { Button } from "@/components/ui/button";
 import { TaskRegistry } from "@/lib/workflow/task/registry";
 
 export const TaskMenu = () => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  if (!isOpen) {
+    return (
+      <div className="flex h-full items-center justify-center border-r-2 border-separate">
+        <Button
+          variant={"ghost"}
+          size={"icon"}
+          onClick={() => setIsOpen(true)}
+          className="rounded-full"
+        >
+          <ChevronsRight size={20} />
+        </Button>
+      </div>
+    );
+  }
+
   return (
-    <aside className="w-[340px] min-w-[340px] border-r-2 border-separate h-full p-2 px-4 overflow-auto">
+    <aside className="w-[340px] min-w-[340px] border-r-2 border-separate h-full p-2 px-4 overflow-auto relative">
+      <div className="flex items-center justify-between sticky top-0 bg-background z-10 pb-2">
+        <span className="font-bold">Palette</span>
+        <Button
+          variant={"ghost"}
+          size={"icon"}
+          onClick={() => setIsOpen(false)}
+        >
+          <ChevronsLeft size={20} />
+        </Button>
+      </div>
       <Accordion
         type="multiple"
         className="w-full"

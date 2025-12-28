@@ -10,13 +10,13 @@ export const ScrollToElementTask = {
     isEntryPoint: false,
     inputs: [
         {
-            name: "Web page",
-            type: TaskParamType.BROWSER_INSTANCE,
+            name: "Selector",
+            type: TaskParamType.STRING,
             required: true,
         },
         {
-            name: "Selector",
-            type: TaskParamType.STRING,
+            name: "Web page",
+            type: TaskParamType.BROWSER_INSTANCE,
             required: true,
         },
     ],
@@ -26,4 +26,4 @@ export const ScrollToElementTask = {
             type: TaskParamType.BROWSER_INSTANCE,
         },
     ],
-};
+} as const;

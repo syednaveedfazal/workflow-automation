@@ -10,11 +10,6 @@ export const FillInputTask = {
     isEntryPoint: false,
     inputs: [
         {
-            name: "Web page",
-            type: TaskParamType.BROWSER_INSTANCE,
-            required: true,
-        },
-        {
             name: "Selector",
             type: TaskParamType.STRING,
             required: true,
@@ -24,6 +19,11 @@ export const FillInputTask = {
             type: TaskParamType.STRING,
             required: true,
         },
+        {
+            name: "Web page",
+            type: TaskParamType.BROWSER_INSTANCE,
+            required: true,
+        },
     ],
     outputs: [
         {
@@ -31,4 +31,4 @@ export const FillInputTask = {
             type: TaskParamType.BROWSER_INSTANCE,
         },
     ],
-};
+} as const;

@@ -1,5 +1,5 @@
 import { TaskParamType, TaskType } from "@/types/task";
-import { SendIcon, LucideProps } from "lucide-react";
+import { LucideProps, SendIcon } from "lucide-react";
 
 export const DeliverViaWebhookTask = {
     type: TaskType.DELIVER_VIA_WEBHOOK,
@@ -21,4 +21,4 @@ export const DeliverViaWebhookTask = {
         },
     ],
     outputs: [],
-};
+} as const;

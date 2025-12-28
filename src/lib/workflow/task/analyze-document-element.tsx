@@ -31,4 +31,4 @@ export const AnalyzeDocumentElement = {
       type: TaskParamType.STRING,
     },
   ],
-};
+} as const;

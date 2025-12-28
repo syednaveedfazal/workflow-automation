@@ -15,7 +15,7 @@ export const NavigateUrlTask = {
             required: true,
         },
         {
-            name: "Url",
+            name: "URL",
             type: TaskParamType.STRING,
             required: true,
         },
@@ -26,4 +26,4 @@ export const NavigateUrlTask = {
             type: TaskParamType.BROWSER_INSTANCE,
         },
     ],
-};
+} as const;

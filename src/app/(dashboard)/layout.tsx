@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Separator } from "@/components/ui/separator";
-import { DesktopSidebar } from "@/components/custom/Sidebar";
+import { DesktopSidebar, MobileSidebar } from "@/components/custom/Sidebar";
 import { BreadCrumbHeader } from "@/components/custom/BreadCrumbHeader";
 import { ModeToggle } from "@/components/custom/Toggle";
 import { SignedIn, UserButton } from "@clerk/nextjs";
@@ -11,7 +11,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <DesktopSidebar />
       <div className="flex flex-col flex-1 min-h-screen">
         <header className="flex items-center justify-between px-6 py-4 h-[50px] container">
-          <BreadCrumbHeader />
+          <div className="flex items-center gap-4">
+            <MobileSidebar />
+            <BreadCrumbHeader />
+          </div>
           <div className="gap-1 flex items-center">
             <ModeToggle />
 
