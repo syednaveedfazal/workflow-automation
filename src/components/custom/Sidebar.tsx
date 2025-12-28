@@ -33,7 +33,7 @@ const routes = [
   },
   {
     href: "documents",
-    label: "Documents",
+    label: "Document",
     icon: File,
   },
 ];
