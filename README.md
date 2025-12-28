@@ -27,7 +27,7 @@ The frontend has been meticulously crafted to offer a "premium" feel with a focu
 ### 1. Visual Workflow Builder (React Flow)
 The heart of the application is the **Editor**, powered by React Flow.
 - **Drag-and-Drop**: Users can drag task nodes (like "Launch Browser", "Fill Input", "Click Element") from the sidebar palette onto the canvas.
-- **Custom Nodes**: We've implemented custom node types for different actions, complete with input/output handles and validation.
+- **Custom Nodes**: I have implemented custom node types for different actions, complete with input/output handles and validation.
 - **Dynamic Connections**: Nodes can be connected to pass data (strings, credentials, etc.) between steps.
 - **State Management**: The editor state interacts seamlessly with the global application state to track changes and configuration.
 
