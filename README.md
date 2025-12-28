@@ -67,8 +67,3 @@ A major focus of the current development is shifting away from expensive, paid A
 
 5.  Open [http://localhost:3000](http://localhost:3000) with your browser.
 
----
-
-*Built with ❤️ by [Your Name]*
-
-de63300209005360757776
